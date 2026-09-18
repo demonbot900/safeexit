@@ -1,0 +1,46 @@
+{
+  "name": "safeexit",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "SafeExit – Knopf, Station und lokales Hilfenetzwerk",
+  "engines": {
+    "node": ">=22"
+  },
+  "workspaces": [
+    "packages/shared-types",
+    "packages/protocols",
+    "packages/api-contracts",
+    "apps/backend",
+    "apps/web"
+  ],
+  "scripts": {
+    "build": "npm run build --workspaces --if-present",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "test": "npm run test --workspaces --if-present",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "dev:api": "npm run dev:api --workspace @safeexit/backend",
+    "dev:alarm": "npm run dev:alarm --workspace @safeexit/backend",
+    "dev:web": "npm run dev --workspace @safeexit/web",
+    "db:migrate": "npm run db:migrate --workspace @safeexit/backend",
+    "db:seed": "npm run db:seed --workspace @safeexit/backend",
+    "simulate:button": "npm run simulate:button --workspace @safeexit/backend",
+    "protocols:generate": "npm run generate --workspace @safeexit/protocols",
+    "firmware:configure": "cmake -S firmware -B firmware/build",
+    "firmware:test": "cmake --build firmware/build && ctest --test-dir firmware/build --output-on-failure"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@swc/core": "^1.16.2",
+    "@types/node": "^22.20.3",
+    "eslint": "^10.10.0",
+    "prettier": "^3.9.6",
+    "typescript": "~6.0.3",
+    "typescript-eslint": "^8.70.0",
+    "unplugin-swc": "^1.6.0",
+    "vitest": "^5.0.1"
+  }
+}

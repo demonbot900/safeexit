@@ -1,0 +1,33 @@
+# Abhängigkeiten
+node_modules/
+.pnp*
+# Build-Ergebnisse
+dist/
+build/
+.next/
+out/
+*.tsbuildinfo
+firmware/build/
+# Tests und Werkzeuge
+coverage/
+.vitest/
+# Umgebung (niemals einchecken)
+.env
+.env.local
+.env.*.local
+!.env.example
+# Flutter / Dart
+apps/mobile/.dart_tool/
+apps/mobile/build/
+apps/mobile/.flutter-plugins-dependencies
+apps/mobile/ios/Pods/
+apps/mobile/ios/.symlinks/
+apps/mobile/android/.gradle/
+apps/mobile/android/local.properties
+# Editoren und Betriebssysteme
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/*
+!.vscode/extensions.json
+*.log

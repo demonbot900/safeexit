@@ -1,0 +1,57 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  typescript:
+    name: TypeScript (Backend, Web, Pakete)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - run: npm run lint
+      - run: npm run format:check
+      - run: npm test
+
+  firmware:
+    name: Firmware (Host-Tests)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - name: Build-Werkzeuge installieren
+        run: sudo apt-get update && sudo apt-get install -y cmake ninja-build
+      - name: Testvektoren erzeugen und vergleichen
+        uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run protocols:generate
+      - name: Pruefen, dass die erzeugten Vektoren eingecheckt sind
+        run: git diff --exit-code packages/protocols/c/test/generated_vectors.h
+      - run: cmake -S firmware -B firmware/build -G Ninja
+      - run: cmake --build firmware/build
+      - run: ctest --test-dir firmware/build --output-on-failure
+
+  flutter:
+    name: Mobile App
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+      - run: flutter pub get
+        working-directory: apps/mobile
+      - run: flutter analyze
+        working-directory: apps/mobile
+      - run: flutter test
+        working-directory: apps/mobile

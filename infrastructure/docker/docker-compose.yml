@@ -1,0 +1,71 @@
+# Vollstaendige Umgebung fuer Entwicklung und Vorfuehrung.
+#   docker compose -f infrastructure/docker/docker-compose.yml up --build
+#
+# Fuer die taegliche Arbeit reicht meist STORAGE=memory ohne Docker,
+# siehe docs/entwicklung.md.
+name: safeexit
+
+services:
+  postgres:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_USER: safeexit
+      POSTGRES_PASSWORD: safeexit
+      POSTGRES_DB: safeexit
+    ports:
+      - '5432:5432'
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U safeexit']
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  migrate:
+    build:
+      context: ../..
+      dockerfile: infrastructure/docker/Dockerfile.backend
+    environment:
+      STORAGE: postgres
+      DATABASE_URL: postgres://safeexit:safeexit@postgres:5432/safeexit
+      MIGRATIONS_DIR: /app/infrastructure/database/migrations
+    command: ['node', 'dist/persistence/postgres/migrate.js']
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  alarm:
+    build:
+      context: ../..
+      dockerfile: infrastructure/docker/Dockerfile.backend
+    environment:
+      STORAGE: postgres
+      DATABASE_URL: postgres://safeexit:safeexit@postgres:5432/safeexit
+      ALARM_PORT: 3001
+    command: ['node', 'dist/main.alarm.js']
+    ports:
+      - '3001:3001'
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+    restart: unless-stopped
+
+  api:
+    build:
+      context: ../..
+      dockerfile: infrastructure/docker/Dockerfile.backend
+    environment:
+      STORAGE: postgres
+      DATABASE_URL: postgres://safeexit:safeexit@postgres:5432/safeexit
+      API_PORT: 3000
+    command: ['node', 'dist/main.api.js']
+    ports:
+      - '3000:3000'
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+    restart: unless-stopped
+
+volumes:
+  postgres-data:

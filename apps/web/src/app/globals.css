@@ -1,0 +1,266 @@
+/*
+ * Markenfarben aus dem Businessplan 8: Schwarz, Sand, Terrakotta.
+ * Tonalitaet: Selbstbestimmung, keine Angst. Deshalb warme Flaechen, viel Ruhe,
+ * kein Rot ausser fuer echte Warnungen.
+ */
+:root {
+  --schwarz: #141311;
+  --sand: #e9dfce;
+  --sand-hell: #f6f1e7;
+  --terrakotta: #c05b3c;
+  --terrakotta-dunkel: #a4482c;
+  --grau: #6f6a61;
+  --rahmen: #d8cdb8;
+
+  --hintergrund: var(--sand-hell);
+  --text: var(--schwarz);
+  --flaeche: #ffffff;
+
+  --radius: 14px;
+  --spalte: 62rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --hintergrund: #100f0d;
+    --text: var(--sand-hell);
+    --flaeche: #1b1917;
+    --rahmen: #33302b;
+    --grau: #a39c90;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--hintergrund);
+  color: var(--text);
+  font-family:
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    'Segoe UI',
+    Roboto,
+    'Helvetica Neue',
+    sans-serif;
+  font-size: 17px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+main,
+header,
+footer {
+  max-width: var(--spalte);
+  margin: 0 auto;
+  padding: 0 1.25rem;
+}
+
+h1,
+h2,
+h3 {
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  margin: 0 0 0.6em;
+}
+
+h1 {
+  font-size: clamp(2.4rem, 7vw, 4rem);
+}
+
+h2 {
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  margin-top: 3.5rem;
+}
+
+p {
+  margin: 0 0 1rem;
+}
+
+a {
+  color: inherit;
+}
+
+.marke {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 1.5rem 1.25rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.marke-punkt {
+  width: 0.85rem;
+  height: 0.85rem;
+  border-radius: 50%;
+  background: var(--terrakotta);
+}
+
+.hero {
+  padding: 2rem 1.25rem 1rem;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  max-width: 34rem;
+  color: var(--grau);
+}
+
+.merkmale {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  list-style: none;
+  margin: 2rem 0 0;
+  padding: 0;
+}
+
+.merkmal {
+  background: var(--flaeche);
+  border: 1px solid var(--rahmen);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+}
+
+.merkmal h3 {
+  font-size: 1.05rem;
+  margin-bottom: 0.35rem;
+}
+
+.merkmal p {
+  color: var(--grau);
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.preise {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+  margin: 1.5rem 0;
+}
+
+.preis {
+  background: var(--flaeche);
+  border: 1px solid var(--rahmen);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+}
+
+.preis.hervorgehoben {
+  border-color: var(--terrakotta);
+  border-width: 2px;
+}
+
+.preis .betrag {
+  font-size: 2rem;
+  font-weight: 700;
+  display: block;
+}
+
+.preis .hinweis {
+  color: var(--grau);
+  font-size: 0.9rem;
+}
+
+.formular {
+  background: var(--flaeche);
+  border: 1px solid var(--rahmen);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  margin-top: 2rem;
+}
+
+.feld {
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.feld span {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 0.35rem;
+}
+
+input[type='email'],
+input[type='text'],
+select {
+  width: 100%;
+  padding: 0.7rem 0.8rem;
+  font: inherit;
+  color: inherit;
+  background: var(--hintergrund);
+  border: 1px solid var(--rahmen);
+  border-radius: 10px;
+}
+
+input:focus-visible,
+select:focus-visible,
+button:focus-visible {
+  outline: 3px solid var(--terrakotta);
+  outline-offset: 2px;
+}
+
+.einwilligung {
+  display: flex;
+  gap: 0.6rem;
+  align-items: flex-start;
+  font-size: 0.9rem;
+  color: var(--grau);
+  margin-bottom: 1rem;
+}
+
+button {
+  background: var(--terrakotta);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 0.8rem 1.4rem;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+button:hover:not(:disabled) {
+  background: var(--terrakotta-dunkel);
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: progress;
+}
+
+.rueckmeldung {
+  margin-top: 1rem;
+  font-size: 0.95rem;
+}
+
+.rueckmeldung.fehler {
+  color: var(--terrakotta-dunkel);
+}
+
+.hinweiskasten {
+  border-left: 3px solid var(--terrakotta);
+  padding: 0.25rem 0 0.25rem 1rem;
+  margin: 2.5rem 0;
+  color: var(--grau);
+}
+
+footer {
+  border-top: 1px solid var(--rahmen);
+  margin-top: 4rem;
+  padding-top: 1.5rem;
+  padding-bottom: 3rem;
+  color: var(--grau);
+  font-size: 0.9rem;
+}

@@ -1,0 +1,114 @@
+{
+  "version": 1,
+  "note": "Normative Testvektoren. TypeScript- und C-Fassung muessen beide passen.",
+  "uplink": [
+    {
+      "name": "alarm_trigger_stufe_1",
+      "frame": {
+        "type": "alarm_trigger",
+        "sequence": 1,
+        "level": 1,
+        "batteryPercent": 87,
+        "timestamp": 1758000000
+      },
+      "hex": "01010100015780f3c868"
+    },
+    {
+      "name": "alarm_trigger_stufe_3_akku_schwach",
+      "frame": {
+        "type": "alarm_trigger",
+        "sequence": 2,
+        "level": 3,
+        "batteryPercent": 5,
+        "timestamp": 1758000123
+      },
+      "hex": "010102000305fbf3c868"
+    },
+    {
+      "name": "alarm_escalate_auf_stufe_2",
+      "frame": {
+        "type": "alarm_escalate",
+        "sequence": 3,
+        "level": 2,
+        "timestamp": 1758000090
+      },
+      "hex": "0102030002daf3c868"
+    },
+    {
+      "name": "location_gnss_oldenburg",
+      "frame": {
+        "type": "location",
+        "sequence": 4,
+        "latitudeE7": 531435000,
+        "longitudeE7": 82146000,
+        "accuracyMeters": 12,
+        "source": "gnss",
+        "timestamp": 1758000010
+      },
+      "hex": "01030400f80dad1fd072e5040c00008af3c868"
+    },
+    {
+      "name": "location_zellortung_negative_koordinaten",
+      "frame": {
+        "type": "location",
+        "sequence": 5,
+        "latitudeE7": -338688197,
+        "longitudeE7": 1512092955,
+        "accuracyMeters": 1500,
+        "source": "cell",
+        "timestamp": 1758000020
+      },
+      "hex": "010305003b07d0eb1bb5205adc050194f3c868"
+    },
+    {
+      "name": "heartbeat",
+      "frame": {
+        "type": "heartbeat",
+        "sequence": 6,
+        "batteryPercent": 64,
+        "rssiDbm": -97,
+        "firmwareMajor": 1,
+        "firmwareMinor": 4,
+        "timestamp": 1758000030
+      },
+      "hex": "01040600409f01049ef3c868"
+    }
+  ],
+  "downlink": [
+    {
+      "name": "receipt_fuer_standortmeldung",
+      "frame": {
+        "type": "receipt",
+        "sequence": 100,
+        "acknowledgedSequence": 4
+      },
+      "hex": "018064000400"
+    },
+    {
+      "name": "quittierung_ich_komme",
+      "frame": {
+        "type": "acknowledged",
+        "sequence": 101,
+        "timestamp": 1758000045
+      },
+      "hex": "01816500adf3c868"
+    },
+    {
+      "name": "entwarnung",
+      "frame": {
+        "type": "cancelled",
+        "sequence": 102,
+        "timestamp": 1758000300
+      },
+      "hex": "01826600acf4c868"
+    },
+    {
+      "name": "standort_angefordert",
+      "frame": {
+        "type": "request_location",
+        "sequence": 103
+      },
+      "hex": "01836700"
+    }
+  ]
+}
